@@ -1,34 +1,35 @@
-// import org.fluentlenium.adapter.FluentTest;
-// import org.junit.ClassRule;
-// import org.junit.Test;
-// import org.openqa.selenium.WebDriver;
-// import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-//
-// import static org.assertj.core.api.Assertions.assertThat;
-//
-// public class AppTest extends FluentTest {
-//   public WebDriver webDriver = new HtmlUnitDriver();
-//
-//   @Override
-//   public WebDriver getDefaultDriver() {
-//     return webDriver;
-//   }
-//
-//   @ClassRule
-//   public static ServerRule server = new ServerRule();
-//
-//   @Test
-//   public void rootTest() {
-//     goTo("http://localhost:4567/");
-//     assertThat(pageSource()).contains("Anagram");
-//   }
-//
-//   @Test
-//   public void fourPennies() {
-//     goTo("http://localhost:4567/");
-//     fill("#userInput").with("4");
-//     submit(".btn");
-//     assertThat(pageSource()).contains("4 penny(s)");
-//   }
-//
-// }
+import org.fluentlenium.adapter.FluentTest;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class AppTest extends FluentTest {
+  public WebDriver webDriver = new HtmlUnitDriver();
+
+  @Override
+  public WebDriver getDefaultDriver() {
+    return webDriver;
+  }
+
+  @ClassRule
+  public static ServerRule server = new ServerRule();
+
+  @Test
+  public void rootTest() {
+    goTo("http://localhost:4567/");
+    assertThat(pageSource()).contains("Anagram");
+  }
+
+  @Test
+  public void twoWords() {
+    goTo("http://localhost:4567/");
+    fill("#inputOne").with("Cat");
+    fill("#inputTwo").with("Dog");
+    submit(".btn");
+    assertThat(pageSource()).contains("are not");
+  }
+
+}
