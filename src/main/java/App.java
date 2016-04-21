@@ -16,19 +16,27 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    // get("/results", (request, response) -> {
-    //   Map<String, Object> model = new HashMap<String, Object>();
-    //   model.put("template", "templates/results.vtl");
-    //
-    //   Integer inputtedCents = Integer.parseInt(request.queryParams("userInput"));
-    //
-    //   Coin myCoin = new Coin();
-    //   String exchange = myCoin.runCoin(inputtedCents);
-    //
-    //   model.put("exchange", exchange);
-    //
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+    get("/results", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/results.vtl");
+
+      String inputtedWord1 = request.queryParams("inputOne");
+      String inputtedWord2 = request.queryParams("inputTwo");
+
+      Anagram myAnagram = new Anagram();
+      Boolean verifyAnagram = myAnagram.checkAnagram(inputtedWord1, inputtedWord2);
+      String result = "";
+      if (verifyAnagram.equals(true)) {
+        result = String.format("%s and %s are anagrams of each other!", inputtedWord1, inputtedWord2);
+      }
+      else {
+        result = String.format("%s and %s are not anagrams!  Try again.", inputtedWord1, inputtedWord2);
+      }
+
+      model.put("result", result);
+
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
   }
 }
